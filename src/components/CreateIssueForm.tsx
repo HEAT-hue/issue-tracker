@@ -1,5 +1,6 @@
 'use client'
 import { createIssue } from '@/lib/actions'
+import { Button } from '@radix-ui/themes';
 
 const CreateIssueForm = () => {
 
@@ -27,7 +28,7 @@ const CreateIssueForm = () => {
                     <textarea className='w-full resize-none h-24 border focus:border-blue-500 outline-none p-2' id="description" />
                 </div>
             </div>
-            <button type='submit' className='mt-5 bg-blue-800 text-white p-3 rounded'>Create Issue</button>
+            <Button>New Issue</Button>
         </form>
     )
 }
