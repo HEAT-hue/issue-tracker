@@ -1,12 +1,14 @@
 'use server'
 
+import { redirect } from 'next/navigation';
+import { revalidatePath } from 'next/cache';
 import { boolean, z } from 'zod';
 import prisma from '../../prisma/client';
 
 // Create object zchema
 const CreateIssueSchema = z.object({
-    title: z.string().min(1).max(255),
-    description: z.string().min(1)
+    title: z.string().min(1, 'Title is required').max(255),
+    description: z.string().min(1, 'Description is required')
 });
 
 // Extract inferred type from schema
@@ -21,7 +23,7 @@ export async function createIssue(formData: CreateIssue) {
     if (!validation.success) {
         return {
             status: false,
-            data: validation.error.errors
+            data: validation.error.format()
         }
     }
 
@@ -30,8 +32,11 @@ export async function createIssue(formData: CreateIssue) {
         data: { title: formData.title, description: formData.description }
     })
 
-    return {
-        status: true,
-        data: newIssue
-    };
+    // Server side routing
+
+    // Revalidate "/issues" path  
+    revalidatePath('/issues');
+
+    // Redirect back to issues page
+    redirect('/issues')
 }
