@@ -22,7 +22,7 @@ export default function RootLayout({ children, }: {
         {/* Radix UI Theme */}
         <Theme>
           <NavBar />
-          <main>{children}</main>
+          <main className='p-5'>{children}</main>
         </Theme>
       </body>
     </html>
