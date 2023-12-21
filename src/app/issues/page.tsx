@@ -8,7 +8,7 @@ const IssuesPage = () => {
   return (
     <div className='flex flex-col gap-y-4'>
       <div>IssuesPage</div>
-      <Button><Link href={"/issues/new"}>Create Issue</Link></Button>
+      <Button><Link className='w-full h-full flex items-center justify-center' href={"/issues/new"}>Create Issue</Link></Button>
     </div>
   )
 }
