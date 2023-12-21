@@ -7,24 +7,21 @@ import prisma from '../../prisma/client';
 
 // Create object zchema
 const CreateIssueSchema = z.object({
-    title: z.string().min(1, 'Title is required').max(255),
-    description: z.string().min(1, 'Description is required')
+    title: z.string().min(1, { message: 'Title is required' }).max(255),
+    description: z.string().min(1, { message: 'Description is required' }),
 });
 
 // Extract inferred type from schema
 type CreateIssue = z.infer<typeof CreateIssueSchema>;
 
-
-
 export async function createIssue(formData: CreateIssue) {
+
     // Check if form data passes validation
     const validation = CreateIssueSchema.safeParse(formData);
 
     if (!validation.success) {
-        return {
-            status: false,
-            data: validation.error.format()
-        }
+        const errorMessage = validation.error.format().title?._errors[0] || validation.error.format().description?._errors[0];
+        throw new Error(errorMessage);
     }
 
     // Insert the issue in database
@@ -33,7 +30,7 @@ export async function createIssue(formData: CreateIssue) {
     })
 
     // Server side routing
-
+    
     // Revalidate "/issues" path  
     revalidatePath('/issues');
 
