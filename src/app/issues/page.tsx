@@ -4,6 +4,7 @@ import { Table } from '@radix-ui/themes';
 import IssueStatusBadge from '@/components/issues/IssueStatusBadge';
 import delay from 'delay';
 import IssueActions from '@/components/issues/IssueActions';
+import Link from 'next/link';
 
 export default async function IssuesPage() {
 
@@ -38,12 +39,14 @@ export default async function IssuesPage() {
             return (
               <Table.Row key={issue.id}>
                 <Table.RowHeaderCell>
-                  {issue.title}
+                  <Link href={`/issues/${issue.id}`}>
+                    {issue.title}
 
-                  {/* Status badge */}
-                  <div className='sm:hidden'>
-                    <IssueStatusBadge status={issue.status} />
-                  </div>
+                    {/* Status badge */}
+                    <div className='sm:hidden'>
+                      <IssueStatusBadge status={issue.status} />
+                    </div>
+                  </Link>
                 </Table.RowHeaderCell>
 
                 {/* Status badge */}
