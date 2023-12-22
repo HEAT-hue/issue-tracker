@@ -1,15 +1,13 @@
 'use server'
 
+/**
+ * @desc server actions
+ */
 import { redirect } from 'next/navigation';
 import { revalidatePath } from 'next/cache';
-import { boolean, z } from 'zod';
-import prisma from '../../prisma/client';
-
-// Create object zchema
-const CreateIssueSchema = z.object({
-    title: z.string().min(1, { message: 'Title is required' }).max(255),
-    description: z.string().min(1, { message: 'Description is required' }),
-});
+import { z } from 'zod';
+import prisma from '../prisma/client';
+import { CreateIssueSchema } from './validationSchemas';
 
 // Extract inferred type from schema
 type CreateIssue = z.infer<typeof CreateIssueSchema>;
@@ -30,7 +28,7 @@ export async function createIssue(formData: CreateIssue) {
     })
 
     // Server side routing
-    
+
     // Revalidate "/issues" path  
     revalidatePath('/issues');
 

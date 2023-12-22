@@ -1,16 +1,51 @@
 import React from 'react'
-// import CreateIssueForm from '@/components/CreateIssueForm';
 import { Button } from '@radix-ui/themes'
 import Link from 'next/link'
+import prisma from '@/prisma/client';
+import { Table } from '@radix-ui/themes';
 
-const IssuesPage = () => {
+export default async function IssuesPage() {
+
+  // Fetch issues
+  const issues = await prisma.issue.findMany()
 
   return (
     <div className='flex flex-col gap-y-4'>
-      <div>IssuesPage</div>
-      <Button><Link className='w-full h-full flex items-center justify-center' href={"/issues/new"}>Create Issue</Link></Button>
+
+      {/* Create a new issue */}
+      <div className='mb-2'>
+        <Button><Link className='w-full h-full flex items-center justify-center' href={"/issues/new"}>Create Issue</Link></Button>
+      </div>
+
+      {/* Table showing issues */}
+      <Table.Root variant='surface'>
+
+        {/* Table header */}
+        <Table.Header>
+          <Table.Row>
+            <Table.ColumnHeaderCell>Issue</Table.ColumnHeaderCell>
+            <Table.ColumnHeaderCell className='hidden sm:table-cell'>Status</Table.ColumnHeaderCell>
+            <Table.ColumnHeaderCell className='hidden sm:table-cell'>Created At</Table.ColumnHeaderCell>
+          </Table.Row>
+        </Table.Header>
+
+        {/* Table Body */}
+        <Table.Body>
+          {issues.map((issue) => {
+            return (
+              <Table.Row key={issue.id}>
+                <Table.RowHeaderCell>
+                  {issue.title}
+                  <div className='sm:hidden'>{issue.status}</div>
+                </Table.RowHeaderCell>
+                <Table.Cell className='hidden sm:table-cell'>{issue.status}</Table.Cell>
+                <Table.Cell className='hidden sm:table-cell'>{issue.createdAt.toDateString()}</Table.Cell>
+              </Table.Row>
+            )
+          })}
+        </Table.Body>
+      </Table.Root>
+
     </div>
   )
 }
-
-export default IssuesPage
