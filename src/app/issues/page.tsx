@@ -1,17 +1,13 @@
-import React from 'react'
+import Link from '@/components/Link';
+import IssueActions from '@/components/issues/IssueActions';
+import IssueStatusBadge from '@/components/issues/IssueStatusBadge';
 import prisma from '@/prisma/client';
 import { Table } from '@radix-ui/themes';
-import IssueStatusBadge from '@/components/issues/IssueStatusBadge';
-import delay from 'delay';
-import IssueActions from '@/components/issues/IssueActions';
-import Link from 'next/link';
 
 export default async function IssuesPage() {
 
   // Fetch issues
   const issues = await prisma.issue.findMany()
-
-  await delay(3000);
 
   return (
     <div className='flex flex-col gap-y-4'>
