@@ -11,7 +11,7 @@ const LoadingNewIssuePage = () => {
 
             {/* Input text field */}
             <div className='space-y-1'>
-                <Skeleton />
+                <Skeleton width={"3rem"} />
             </div>
 
             {/* Form Controller */}
