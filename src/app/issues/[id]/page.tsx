@@ -25,26 +25,25 @@ const IssueDetailsPage = async ({ params }: Prop) => {
 
     return (
         <Box className='max-w-xl'>
-            <Flex gap={'3'} direction={'column'}>
+            {/* Issue heading */}
+            <Heading>{issue.title}</Heading>
 
-                {/* Issue heading */}
-                <Heading>{issue.title}</Heading>
-
-                {/* Issue date */}
-                <Text>{issue.updatedAt.toDateString()}</Text>
-
+            <Flex gap={'3'}  align={'center'} className='mt-4'>
                 {/* Issue status */}
-                <div className='w-max'>
+                <div className='w-max h-max flex items-center'>
                     <IssueStatusBadge status={issue.status} />
                 </div>
 
-                {/* Issue description */}
-                <Card className='prose'>
-                    <Markdown>
-                        {issue.description}
-                    </Markdown>
-                </Card>
+                {/* Issue date */}
+                <Text>{issue.updatedAt.toDateString()}</Text>
             </Flex>
+
+            {/* Issue description */}
+            <Card className='prose mt-4'>
+                <Markdown>
+                    {issue.description}
+                </Markdown>
+            </Card>
         </Box>
     )
 }

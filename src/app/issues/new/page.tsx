@@ -2,7 +2,6 @@
 import React from 'react'
 import { Text, TextField } from '@radix-ui/themes'
 import { Button } from '@radix-ui/themes'
-import SimpleMDE from "react-simplemde-editor";
 import "easymde/dist/easymde.min.css";
 import { useForm, Controller } from "react-hook-form"
 import { createIssue } from '@/lib/actions';
@@ -12,6 +11,11 @@ import { CreateIssueSchema } from '@/lib/validationSchemas';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import Spinner from '@/components/Spinner';
+import dynamic from 'next/dynamic';
+
+const SimpleMDE = dynamic(() => import('react-simplemde-editor'), {
+    ssr: false
+})
 
 // Extract inferred type from schema
 type IssueForm = z.infer<typeof CreateIssueSchema>;
