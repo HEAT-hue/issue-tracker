@@ -1,7 +1,7 @@
 import React from 'react'
 import prisma from '@/prisma/client'
 import { notFound } from 'next/navigation'
-import { Heading, Card, Text, Flex } from '@radix-ui/themes'
+import { Heading, Card, Text, Flex, Box } from '@radix-ui/themes'
 import IssueStatusBadge from '@/components/issues/IssueStatusBadge'
 import Markdown from 'react-markdown'
 
@@ -24,9 +24,9 @@ const IssueDetailsPage = async ({ params }: Prop) => {
     }
 
     return (
-        <div className='max-w-xl'>
+        <Box className='max-w-xl'>
             <Flex gap={'3'} direction={'column'}>
-                
+
                 {/* Issue heading */}
                 <Heading>{issue.title}</Heading>
 
@@ -45,7 +45,7 @@ const IssueDetailsPage = async ({ params }: Prop) => {
                     </Markdown>
                 </Card>
             </Flex>
-        </div>
+        </Box>
     )
 }
 
