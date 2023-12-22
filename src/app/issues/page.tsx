@@ -1,21 +1,23 @@
 import React from 'react'
-import { Button } from '@radix-ui/themes'
-import Link from 'next/link'
 import prisma from '@/prisma/client';
 import { Table } from '@radix-ui/themes';
-import IssueStatusBadge from '@/components/IssueStatusBadge';
+import IssueStatusBadge from '@/components/issues/IssueStatusBadge';
+import delay from 'delay';
+import IssueActions from '@/components/issues/IssueActions';
 
 export default async function IssuesPage() {
 
   // Fetch issues
   const issues = await prisma.issue.findMany()
 
+  await delay(3000);
+
   return (
     <div className='flex flex-col gap-y-4'>
 
       {/* Create a new issue */}
       <div className='mb-2'>
-        <Button><Link className='w-full h-full flex items-center justify-center' href={"/issues/new"}>Create Issue</Link></Button>
+        <IssueActions />
       </div>
 
       {/* Table showing issues */}
@@ -56,7 +58,6 @@ export default async function IssuesPage() {
           })}
         </Table.Body>
       </Table.Root>
-
     </div>
   )
 }
