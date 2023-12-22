@@ -3,6 +3,7 @@ import { Button } from '@radix-ui/themes'
 import Link from 'next/link'
 import prisma from '@/prisma/client';
 import { Table } from '@radix-ui/themes';
+import IssueStatusBadge from '@/components/IssueStatusBadge';
 
 export default async function IssuesPage() {
 
@@ -36,9 +37,19 @@ export default async function IssuesPage() {
               <Table.Row key={issue.id}>
                 <Table.RowHeaderCell>
                   {issue.title}
-                  <div className='sm:hidden'>{issue.status}</div>
+
+                  {/* Status badge */}
+                  <div className='sm:hidden'>
+                    <IssueStatusBadge status={issue.status} />
+                  </div>
                 </Table.RowHeaderCell>
-                <Table.Cell className='hidden sm:table-cell'>{issue.status}</Table.Cell>
+
+                {/* Status badge */}
+                <Table.Cell className='hidden sm:table-cell'>
+                  <IssueStatusBadge status={issue.status} />
+                </Table.Cell>
+
+                {/* Date issue created */}
                 <Table.Cell className='hidden sm:table-cell'>{issue.createdAt.toDateString()}</Table.Cell>
               </Table.Row>
             )
