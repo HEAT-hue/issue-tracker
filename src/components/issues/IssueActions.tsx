@@ -1,11 +1,16 @@
-import { Button } from '@radix-ui/themes'
-import Link from 'next/link'
-import React from 'react'
+import { Button } from "@radix-ui/themes";
+import Link from "next/link";
+import React from "react";
 
 const IssueActions = () => {
   return (
-    <Button><Link className='w-full h-full flex items-center justify-center' href={"/issues/new"}>Create Issue</Link></Button>
-  )
-}
+    <Link
+      className="w-max flex items-center justify-center"
+      href={"/issues/new"}
+    >
+      <Button className="cursor-pointer"> Create Issue</Button>
+    </Link>
+  );
+};
 
-export default IssueActions
+export default IssueActions;

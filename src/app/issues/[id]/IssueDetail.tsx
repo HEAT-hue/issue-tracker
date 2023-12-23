@@ -21,7 +21,7 @@ const IssueDetail = ({ issue }: { issue: Issue }) => {
             </Flex>
 
             {/* Issue description */}
-            <Card className='prose mt-4'>
+            <Card className='prose max-w-full mt-4'>
                 <Markdown>
                     {issue.description}
                 </Markdown>
