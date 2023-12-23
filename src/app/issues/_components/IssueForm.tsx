@@ -6,13 +6,10 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { Issue } from "@prisma/client"
 import { Button, Callout, Text, TextField } from "@radix-ui/themes"
 import "easymde/dist/easymde.min.css"
-import dynamic from "next/dynamic"
 import { useState } from "react"
 import { Controller, useForm } from "react-hook-form"
-
-const SimpleMDE = dynamic(() => import('react-simplemde-editor'), {
-    ssr: false
-})
+import SimpleMDE from "react-simplemde-editor"
+import { DEFAULT_ERR_MSG } from "@/lib/definitions"
 
 interface Prop {
     issue?: Issue
@@ -46,7 +43,7 @@ const IssueForm = ({ issue }: Prop) => {
                 setError(error.message);
             }
             else {
-                setError("An error occurred");
+                setError(DEFAULT_ERR_MSG);
             }
         } finally {
             setSubmitting(false);

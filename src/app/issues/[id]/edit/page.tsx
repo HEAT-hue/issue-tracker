@@ -1,9 +1,13 @@
-import { Callout } from '@radix-ui/themes';
-import React, { useState } from 'react'
-import { IssueForm } from '../../_components';
 import prisma from '@/prisma/client';
-import { Issue } from '@prisma/client';
 import { notFound } from 'next/navigation';
+import IssueFormSkeleton from './loading';
+
+import dynamic from 'next/dynamic';
+
+const IssueForm = dynamic(() => import('../../_components/IssueForm'), {
+    ssr: false,
+    loading: () => <IssueFormSkeleton />
+})
 
 interface Prop {
     params: { id: string }
@@ -24,7 +28,6 @@ const EditIssuePage = async ({ params }: Prop) => {
     if (!issue) {
         notFound();
     }
-
 
     return (
         <div className='max-w-xl space-y-3'>

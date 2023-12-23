@@ -1,6 +1,6 @@
 import { IssueActions } from '@/components';
 import prisma from '@/prisma/client';
-import IssueTable from './IssueTable';
+import IssueTable from './_components/IssueTable';
 
 export default async function IssuesPage() {
 

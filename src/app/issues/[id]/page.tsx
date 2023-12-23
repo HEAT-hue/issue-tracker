@@ -1,7 +1,8 @@
 import prisma from '@/prisma/client'
-import { Box, Grid } from '@radix-ui/themes'
+import { Box, Flex, Grid } from '@radix-ui/themes'
 import { notFound } from 'next/navigation'
 import EditIssueButton from './EditIssueButton'
+import DeleteIssueButton from './edit/DeleteIssueButton'
 import IssueDetail from './IssueDetail'
 
 interface Prop {
@@ -10,6 +11,7 @@ interface Prop {
 
 const IssueDetailsPage = async ({ params }: Prop) => {
 
+    // Ensure a number is passed
     if (!parseInt(params.id)) {
         notFound();
     }
@@ -31,11 +33,18 @@ const IssueDetailsPage = async ({ params }: Prop) => {
                 <IssueDetail issue={issue} />
             </Box >
 
-            {/* Edit Issue  */}
-            <Box>
-                <EditIssueButton issueId={issue.id} />
-            </Box>
-        </Grid>
+            <Flex direction={'column'} gap={{ initial: '3', sm: '2' }} mt={{ initial: '4', sm: '0' }}>
+                {/* Edit Issue  */}
+                <Box>
+                    <EditIssueButton issueId={issue.id} />
+                </Box>
+
+                {/* Delete Issue */}
+                <Box>
+                    <DeleteIssueButton issueId={issue.id} />
+                </Box>
+            </Flex>
+        </Grid >
     )
 }
 
