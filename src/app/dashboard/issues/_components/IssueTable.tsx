@@ -26,7 +26,7 @@ const IssueTable = ({ issues }: { issues: Issue[] }) => {
                         return (
                             <Table.Row key={issue.id}>
                                 <Table.RowHeaderCell>
-                                    <Link href={`/issues/${issue.id}`}>
+                                    <Link href={`/dashboard/issues/${issue.id}`}>
                                         {issue.title}
 
                                         {/* Status badge */}

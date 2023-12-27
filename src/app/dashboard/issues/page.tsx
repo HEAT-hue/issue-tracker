@@ -1,8 +1,11 @@
 import { IssueActions } from '@/components';
-import prisma from '@/prisma/client';
+import prisma from '../../../../prisma/client';
 import IssueTable from './_components/IssueTable';
+import { auth } from '@/auth';
 
 export default async function IssuesPage() {
+
+  const session = await auth();
 
   // Fetch issues
   const issues = await prisma.issue.findMany()
