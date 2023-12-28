@@ -19,9 +19,6 @@ const links: NavLink[] = [
  */
 const NavBar = ({ session }: { session: Session | null }) => {
 
-    // Get the current pathname for active states
-    const pathname = usePathname();
-
     return (
         <nav className="flex gap-x-6 px-5 py-2 items-center border-b">
             <Container>
@@ -31,50 +28,80 @@ const NavBar = ({ session }: { session: Session | null }) => {
                         <Link href={'/'}><FaBug /></Link>
 
                         {/* Nav Links */}
-                        <ul className="flex gap-x-6">
-                            {links.map((link: NavLink, index: number) => {
-                                return (
-                                    <li key={index}
-                                        className={classNames({
-                                            'text-zinc-800': pathname === link.href,
-                                            'text-zinc-500': pathname !== link.href,
-                                            'hover:text-zinc-800 transition-colors': true
-                                        })}>
-                                        <Link href={link.href}>{link.label}</Link>
-                                    </li>
-                                )
-                            })}
-                        </ul>
+                        <NavLinks />
+
                     </Flex>
 
-                    {pathname.startsWith("/dashboard") && (
-                        <>
-                            <DropdownMenu.Root>
-                                <DropdownMenu.Trigger>
-                                    <Flex gap="2">
-                                        <Avatar className="cursor-pointer" radius="full" fallback={session?.user.email?.charAt(0) ?? "M"} />
-                                    </Flex>
-                                </DropdownMenu.Trigger>
-                                <DropdownMenu.Content>
-                                    <DropdownMenu.Label>{session?.user.email}</DropdownMenu.Label>
-
-                                    <form
-                                        action={signOutUser}
-                                    >
-                                        <button className="flex ml-3 py-[0.4rem] grow items-center justify-center gap-2 rounded-md bg-gray-50 p-3 text-sm font-medium hover:bg-sky-100 hover:text-blue-600 md:flex-none md:justify-start md:p-2 md:px-3">
-                                            <div className="hidden md:block">Sign Out</div>
-                                        </button>
-                                    </form>
-                                </DropdownMenu.Content>
-                            </DropdownMenu.Root>
-
-                        </>
-                    )}
+                    {/*  Auth Status dropdown */}
+                    <AuthStatus session={session} />
                 </Flex>
             </Container>
 
         </nav >
     )
 }
+
+const NavLinks = () => {
+
+    // Get the current pathname for active states
+    const pathname = usePathname();
+
+    return (
+        < ul className="flex gap-x-6" >
+            {
+                links.map((link: NavLink, index: number) => {
+                    return (
+                        <li key={index}
+                            className={classNames({
+                                'text-zinc-800': pathname === link.href,
+                                'text-zinc-500': pathname !== link.href,
+                                'hover:text-zinc-800 transition-colors': true
+                            })}>
+                            <Link href={link.href}>{link.label}</Link>
+                        </li>
+                    )
+                })
+            }
+        </ul >
+    )
+}
+
+
+const AuthStatus = ({ session }: { session: Session | null }) => {
+
+    // Get the current pathname for active states
+    const pathname = usePathname();
+
+    if (pathname.startsWith("/dashboard")) {
+        return (
+            <>
+                <DropdownMenu.Root>
+                    <DropdownMenu.Trigger>
+                        <Flex gap="2">
+                            <Avatar className="cursor-pointer" radius="full" fallback={session?.user.email?.charAt(0) ?? "M"} />
+                        </Flex>
+                    </DropdownMenu.Trigger>
+                    <DropdownMenu.Content>
+                        <DropdownMenu.Label>{session?.user.email}</DropdownMenu.Label>
+
+                        <form
+                            action={signOutUser}
+                        >
+                            <button className="flex ml-3 py-[0.4rem] grow items-center justify-center gap-2 rounded-md bg-gray-50 p-3 text-sm font-medium hover:bg-sky-100 hover:text-blue-600 md:flex-none md:justify-start md:p-2 md:px-3">
+                                <div className="hidden md:block">Sign Out</div>
+                            </button>
+                        </form>
+                    </DropdownMenu.Content>
+                </DropdownMenu.Root>
+
+            </>
+        )
+    }
+
+    return (
+        null
+    )
+}
+
 
 export default NavBar
