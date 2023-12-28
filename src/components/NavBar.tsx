@@ -5,7 +5,8 @@ import { FaBug } from "react-icons/fa";
 import { usePathname } from "next/navigation";
 import classNames from "classnames";
 import { signOutUser } from "@/lib/actions";
-import { Container, Flex } from "@radix-ui/themes";
+import { Avatar, Button, Container, DropdownMenu, Flex } from "@radix-ui/themes";
+import { Session } from "next-auth/types";
 
 const links: NavLink[] = [
     { label: 'Dashboard', href: '/' },
@@ -16,7 +17,7 @@ const links: NavLink[] = [
  * Nav bar component
  * @returns navigation bar
  */
-const NavBar = () => {
+const NavBar = ({ session }: { session: Session | null }) => {
 
     // Get the current pathname for active states
     const pathname = usePathname();
@@ -47,13 +48,27 @@ const NavBar = () => {
                     </Flex>
 
                     {pathname.startsWith("/dashboard") && (
-                        <form
-                            action={signOutUser}
-                        >
-                            <button className="flex h-[48px] grow items-center justify-center gap-2 rounded-md bg-gray-50 p-3 text-sm font-medium hover:bg-sky-100 hover:text-blue-600 md:flex-none md:justify-start md:p-2 md:px-3">
-                                <div className="hidden md:block">Sign Out</div>
-                            </button>
-                        </form>
+                        <>
+                            <DropdownMenu.Root>
+                                <DropdownMenu.Trigger>
+                                    <Flex gap="2">
+                                        <Avatar className="cursor-pointer" radius="full" fallback={session?.user.email?.charAt(0) ?? "M"} />
+                                    </Flex>
+                                </DropdownMenu.Trigger>
+                                <DropdownMenu.Content>
+                                    <DropdownMenu.Label>{session?.user.email}</DropdownMenu.Label>
+
+                                    <form
+                                        action={signOutUser}
+                                    >
+                                        <button className="flex ml-3 py-[0.4rem] grow items-center justify-center gap-2 rounded-md bg-gray-50 p-3 text-sm font-medium hover:bg-sky-100 hover:text-blue-600 md:flex-none md:justify-start md:p-2 md:px-3">
+                                            <div className="hidden md:block">Sign Out</div>
+                                        </button>
+                                    </form>
+                                </DropdownMenu.Content>
+                            </DropdownMenu.Root>
+
+                        </>
                     )}
                 </Flex>
             </Container>
