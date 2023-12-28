@@ -51,8 +51,8 @@ export const { auth, signIn, signOut } = NextAuth({
         async jwt({ user, token, account }) {
             if (account && account.type == 'credentials') {
                 token.userId = account.providerAccountId;
-                token.access_token = (user as any).token ?? 'no token';
-                token.role = (user as any).status;
+                token.access_token = user.token ?? 'no token';
+                token.role = user?.role ?? "ACTIVE";
             }
             return token;
         },
@@ -60,7 +60,8 @@ export const { auth, signIn, signOut } = NextAuth({
         async session({ session, token }) {
             // After token is created
             // What you attach here is what you will get in any where session is required;
-            (session as any).token = token.access_token;
+            session.user.role = (token as any).role
+            session.user.token = token.access_token as string;
             return session;
         }
     }

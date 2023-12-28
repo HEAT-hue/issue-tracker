@@ -1,3 +1,5 @@
+import { DefaultSession } from "next-auth";
+
 // type for nav links
 export type NavLink = {
     label: string,
@@ -15,4 +17,21 @@ export type LoginResponse = {
     "token": string,
     "lastLogin": string,
     "kycVerified": boolean
+}
+
+export enum Role {
+    user = 'user',
+    admin = 'admin'
+}
+
+// Augment the next auth module to modify session
+declare module 'next-auth' {
+    interface User {
+        role?: Role;
+        token: string;
+    }
+
+    interface Session extends DefaultSession {
+        user: User
+    }
 }
