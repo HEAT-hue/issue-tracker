@@ -4,6 +4,7 @@ import { notFound } from 'next/navigation'
 import EditIssueButton from './EditIssueButton'
 import DeleteIssueButton from './edit/DeleteIssueButton'
 import IssueDetail from './IssueDetail'
+import AsigneeSelect from './AsigneeSelect'
 
 interface Prop {
     params: { id: string }
@@ -33,7 +34,10 @@ const IssueDetailsPage = async ({ params }: Prop) => {
                 <IssueDetail issue={issue} />
             </Box >
 
-            <Flex direction={'column'} gap={{ initial: '3', sm: '2' }} mt={{ initial: '4', sm: '0' }}>
+            <Flex className='w-max' direction={'column'} gap={{ initial: '3', sm: '2' }} mt={{ initial: '4', sm: '0' }}>
+                {/* Assign issue to user */}
+                <AsigneeSelect />
+
                 {/* Edit Issue  */}
                 <Box>
                     <EditIssueButton issueId={issue.id} />

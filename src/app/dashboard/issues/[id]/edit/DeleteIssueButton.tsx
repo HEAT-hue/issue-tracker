@@ -41,7 +41,7 @@ const DeleteIssueButton = ({ issueId }: { issueId: number }) => {
                         className={classNames({
                             'bg-red-600': !isSubmitting,
                             'bg-gray-300': isSubmitting,
-                            'transition-colors': true
+                            'transition-colors w-full': true
                         })}
                     >
                         Delete Issue

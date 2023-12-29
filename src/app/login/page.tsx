@@ -3,9 +3,9 @@ import LoginForm from '@/components/LoginForm'
 
 const LoginPage = () => {
     return (
-        <>
+        <div className='pt-5'>
             <LoginForm />
-        </>
+        </div>
     )
 }
 

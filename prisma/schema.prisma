@@ -20,6 +20,13 @@ model Issue {
   updatedAt   DateTime @updatedAt
 }
 
+model User {
+  id       String @id @default(cuid())
+  name     String
+  email    String @unique
+  password String
+}
+
 enum Status {
   OPEN
   IN_PROGRESS

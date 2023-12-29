@@ -4,7 +4,7 @@ import Link from "next/link"
 
 const EditIssueButton = ({ issueId }: { issueId: number }) => {
     return (
-        <Button>
+        <Button className="w-full">
             <Link href={`/dashboard/issues/${issueId}/edit`}>
                 <Flex align={'center'} gap={'2'}>
                     <Pencil2Icon />

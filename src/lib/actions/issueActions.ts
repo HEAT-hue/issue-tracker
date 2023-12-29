@@ -5,40 +5,16 @@
 import { redirect } from 'next/navigation';
 import { revalidatePath } from 'next/cache';
 import { z } from 'zod';
-import prisma from '../../prisma/client';
-import { IssueSchema } from './validationSchemas';
+import prisma from '../../../prisma/client';
+import { IssueSchema } from '../validationSchemas';
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library';
-import { DEFAULT_ERR_MSG } from './definitions';
-import delay from 'delay';
-import { AuthError } from 'next-auth';
-import { signIn, signOut } from '@/auth';
+import { DEFAULT_ERR_MSG } from '../definitions';
+
+import { ZodError } from 'zod';
 
 // Extract inferred type from schema
 type CreateIssue = z.infer<typeof IssueSchema>;
 
-export async function authenticate(
-    prevState: string | undefined,
-    formData: FormData,
-) {
-    try {
-        await signIn('credentials', formData);
-    } catch (error) {
-        if (error instanceof AuthError) {
-            switch (error.type) {
-                case 'CredentialsSignin':
-                    return 'Invalid credentials.';
-                default:
-                    return 'Something went wrong.';
-            }
-        }
-        throw error;
-    }
-}
-
-export async function signOutUser() {
-    'use server';
-    await signOut();
-}
 
 export async function createIssue(formData: CreateIssue) {
 
@@ -110,9 +86,6 @@ export async function updateIssue(formData: CreateIssue, issueId: number) {
 }
 
 export async function deleteIssue(issueId: number) {
-
-    await delay(3000);
-
     // Insert the issue in database
     try {
         const response = await prisma.issue.delete({
@@ -127,11 +100,10 @@ export async function deleteIssue(issueId: number) {
         throw new Error("Oops! An error occured");
     }
 
-    // Server side routing
-
     // Revalidate "/issues" path  
     revalidatePath('/issues');
 
     // Redirect back to issues page
     redirect('/issues')
 }
+
