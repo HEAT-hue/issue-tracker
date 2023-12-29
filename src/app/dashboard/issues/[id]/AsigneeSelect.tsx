@@ -20,7 +20,7 @@ const AsigneeSelect = () => {
 
     return (
         <Select.Root defaultValue="apple">
-            <Select.Trigger />
+            <Select.Trigger placeholder='Assign...' />
             <Select.Content>
                 <Select.Group>
                     <Select.Label>Suggestions</Select.Label>

@@ -6,6 +6,7 @@ import './globals.css';
 import './theme.config.css';
 import { NavBar } from '@/components';
 import { auth } from '@/auth';
+import QueryClientProvider from '@/QueryClientProvider';
 
 // Font
 const inter = Inter({
@@ -29,15 +30,18 @@ export default async function RootLayout({ children, }: {
   return (
     <html lang="en">
       <body className={inter.variable}>
-        {/* Radix UI Theme */}
-        <Theme>
-          <NavBar session={session} />
-          <main className='p-5'>
-            <Container>
-              {children}
-            </Container>
-          </main>
-        </Theme>
+        <QueryClientProvider>
+
+          {/* Radix UI Theme */}
+          <Theme>
+            <NavBar session={session} />
+            <main className='p-5'>
+              <Container>
+                {children}
+              </Container>
+            </main>
+          </Theme>
+        </QueryClientProvider>
       </body>
     </html>
   )
