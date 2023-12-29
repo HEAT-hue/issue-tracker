@@ -2,7 +2,9 @@
 import { QueryClient, QueryClientProvider as ReactQueryClientProvider } from "@tanstack/react-query"
 import { PropsWithChildren } from "react";
 
+// QueryClient
 const QueryClientProvider = ({ children }: PropsWithChildren) => {
+
     // Create new instance of query client
     const queryClient = new QueryClient();
 
@@ -13,4 +15,4 @@ const QueryClientProvider = ({ children }: PropsWithChildren) => {
     )
 }
 
-export default QueryClientProvider
+export default QueryClientProvider;
