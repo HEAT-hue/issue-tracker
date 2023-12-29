@@ -1,7 +1,7 @@
 import type { NextAuthConfig } from 'next-auth';
+import prisma from '../prisma/client';
 
 export const authConfig = {
-
     // Direct users to our sign in page
     pages: {
         signIn: '/login',

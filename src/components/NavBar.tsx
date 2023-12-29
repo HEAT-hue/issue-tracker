@@ -20,7 +20,7 @@ const links: NavLink[] = [
 const NavBar = ({ session }: { session: Session | null }) => {
 
     return (
-        <nav className="flex gap-x-6 px-5 py-2 items-center border-b">
+        <nav className="flex gap-x-6 px-5 py-4 items-center border-b">
             <Container>
                 <Flex justify={'between'}>
                     <Flex align={'center'} gap={'3'}>
