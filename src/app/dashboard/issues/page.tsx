@@ -1,14 +1,28 @@
 import { IssueActions } from '@/components';
 import prisma from '../../../../prisma/client';
 import IssueTable from './_components/IssueTable';
-import { auth } from '@/auth';
+import { Status } from '@prisma/client';
 
-export default async function IssuesPage() {
+interface Prop {
+  searchParams?: {
+    status: string;
+  };
+}
 
-  const session = await auth();
+export default async function IssuesPage({ searchParams }: Prop) {
+
+  // Get object values of all status
+  const statuses = Object.values(Status);
+
+  // Check if status parameter exists
+  const status = searchParams?.status ? (statuses.includes(searchParams.status as Status) ? searchParams.status as Status : undefined) : undefined;
 
   // Fetch issues
-  const issues = await prisma.issue.findMany()
+  const issues = await prisma.issue.findMany({
+    where: {
+      status
+    }
+  })
 
   return (
     <div className='flex flex-col gap-y-4'>
