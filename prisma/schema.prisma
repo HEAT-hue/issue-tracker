@@ -12,19 +12,23 @@ datasource db {
 }
 
 model Issue {
-  id          Int      @id @default(autoincrement()) // Auto icnrement id when fields are being inserted
-  title       String   @db.VarChar(255) // Overide the varchar value
-  description String   @db.Text // Long text
-  status      Status   @default(OPEN)
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  id               Int      @id @default(autoincrement()) // Auto icnrement id when fields are being inserted
+  title            String   @db.VarChar(255) // Overide the varchar value of 191
+  description      String   @db.Text // Long text
+  status           Status   @default(OPEN)
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+  assignedToUserId String?  @db.VarChar(255)
+  // Create the foreign key relationship
+  assignedToUser   User?    @relation(fields: [assignedToUserId], references: [id])
 }
 
 model User {
-  id       String @id @default(cuid())
+  id       String  @id @default(cuid())
   name     String
-  email    String @unique
+  email    String  @unique
   password String
+  Issue    Issue[]
 }
 
 enum Status {
