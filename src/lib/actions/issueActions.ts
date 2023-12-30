@@ -2,18 +2,12 @@
 /**
  * @desc server actions
  */
-import { redirect } from 'next/navigation';
-import { revalidatePath } from 'next/cache';
-import { z } from 'zod';
-import prisma from '../../../prisma/client';
-import { IssueSchema } from '../validationSchemas';
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library';
+import { revalidatePath } from 'next/cache';
+import { redirect } from 'next/navigation';
+import prisma from '../../../prisma/client';
 import { DEFAULT_ERR_MSG } from '../definitions';
-
-import { ZodError } from 'zod';
-
-// Extract inferred type from schema
-type CreateIssue = z.infer<typeof IssueSchema>;
+import { CreateIssue, IssueSchema, PatchIssue, patchIssueSchema } from '../validationSchemas';
 
 
 export async function createIssue(formData: CreateIssue) {
@@ -41,48 +35,68 @@ export async function createIssue(formData: CreateIssue) {
     }
 
     // Revalidate "/issues" path  
-    revalidatePath('/issues');
+    revalidatePath('/dashboard/issues');
 
     // Redirect back to issues page
-    redirect('/issues')
+    redirect('/dashboard/issues')
 }
 
-export async function updateIssue(formData: CreateIssue, issueId: number) {
+export async function updateIssue(formData: PatchIssue, issueId: number) {
 
     // Check if form data passes validation
-    const validation = IssueSchema.safeParse(formData);
+    const validation = patchIssueSchema.safeParse(formData);
 
     if (!validation.success) {
         const errorMessage = validation.error.format().title?._errors[0] || validation.error.format().description?._errors[0];
         throw new Error(errorMessage);
     }
 
+    const { title, description, assignedToUserId } = formData
+
+    if (assignedToUserId) {
+        // Check if user exists in the db
+        try {
+            await prisma.user.findUnique({
+                where: { id: assignedToUserId }
+            })
+
+        } catch (error) {
+            console.log(error);
+            if (error instanceof PrismaClientKnownRequestError) {
+                const errorMessage = error.meta?.cause as string;
+                throw new Error(errorMessage);
+            }
+            throw new Error(DEFAULT_ERR_MSG);
+        }
+    }
+
+
     // Update the issue in db
     try {
         // Update the issue in db
-        await prisma.issue.update({
+        const response = await prisma.issue.update({
             where: { id: issueId },
             data: {
-                title: formData.title,
-                description: formData.description
+                title,
+                description,
+                assignedToUserId
             }
         })
 
+        console.log(response);
+
     } catch (error) {
         if (error instanceof PrismaClientKnownRequestError) {
-            const errorMessage = error.meta?.cause as string;
-            throw new Error(errorMessage);
+            throw new Error("An error occured when assigning issue");
         }
         throw new Error(DEFAULT_ERR_MSG);
     }
 
-    // Server side routing
-
     // Revalidate "/issues" path  
-    revalidatePath('/issues');
+    revalidatePath('/dashboard/issues');
 
     // Redirect back to issues page
-    redirect('/issues')
+    redirect('/dashboard/issues')
 }
 
 export async function deleteIssue(issueId: number) {
@@ -101,9 +115,9 @@ export async function deleteIssue(issueId: number) {
     }
 
     // Revalidate "/issues" path  
-    revalidatePath('/issues');
+    revalidatePath('/dashbord/issues');
 
     // Redirect back to issues page
-    redirect('/issues')
+    redirect('/dashboard/issues')
 }
 

@@ -36,7 +36,7 @@ const IssueDetailsPage = async ({ params }: Prop) => {
 
             <Flex className='w-max' direction={'column'} gap={{ initial: '3', sm: '2' }} mt={{ initial: '4', sm: '0' }}>
                 {/* Assign issue to user */}
-                <AsigneeSelect />
+                <AsigneeSelect issue={issue} />
 
                 {/* Edit Issue  */}
                 <Box>
