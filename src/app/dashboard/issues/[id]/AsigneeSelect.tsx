@@ -1,12 +1,10 @@
 'use client';
-import { Select } from '@radix-ui/themes'
-import React, { use } from 'react'
 import { fetchUsers } from '@/lib/actions/userActions';
-// import { useState, useEffect } from 'react';
-import { Issue, User } from '@prisma/client';
-import { useQuery } from '@tanstack/react-query';
+import { Select } from '@radix-ui/themes';
 import { Skeleton } from "@/components";
 import { updateIssue } from '@/lib/actions';
+import { Issue, User } from '@prisma/client';
+import { useQuery } from '@tanstack/react-query';
 import toast, { Toaster } from 'react-hot-toast';
 
 const AsigneeSelect = ({ issue }: { issue: Issue }) => {
@@ -34,7 +32,6 @@ const AsigneeSelect = ({ issue }: { issue: Issue }) => {
             await updateIssue({ assignedToUserId: userId }, issue.id);
         } catch (error) {
             if (error instanceof Error) {
-                console.log(error.message);
                 toast.error(error.message)
             }
             else {
