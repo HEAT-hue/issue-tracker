@@ -3,8 +3,21 @@ import { Issue } from '@prisma/client'
 import { Table } from '@radix-ui/themes'
 import { Link } from '@/components'
 import React from 'react'
+import { ArrowUpIcon } from '@radix-ui/react-icons'
+import NextLink from 'next/link'
+import { TableColumn } from '@/lib/definitions'
 
-const IssueTable = ({ issues }: { issues: Issue[] }) => {
+interface Prop {
+    issues: Issue[],
+    searchParams: {
+        status?: string | undefined;
+        orderBy?: string | undefined;
+    } | undefined
+    tableColumns: TableColumn[]
+}
+
+const IssueTable = ({ issues, searchParams, tableColumns }: Prop) => {
+
     return (
         <>
 
@@ -14,9 +27,25 @@ const IssueTable = ({ issues }: { issues: Issue[] }) => {
                 {/* Table header */}
                 <Table.Header>
                     <Table.Row>
-                        <Table.ColumnHeaderCell>Issue</Table.ColumnHeaderCell>
-                        <Table.ColumnHeaderCell className='hidden sm:table-cell'>Status</Table.ColumnHeaderCell>
-                        <Table.ColumnHeaderCell className='hidden sm:table-cell'>Created At</Table.ColumnHeaderCell>
+                        {tableColumns.map((column, index: number) => {
+                            return (
+                                <Table.ColumnHeaderCell key={index} className={column.className} >
+                                    {/* // Change search params */}
+                                    <NextLink className='flex gap-x-1 items-center' href={{
+                                        pathname: '',
+                                        query: {
+                                            ...searchParams,
+                                            orderBy: column.value
+                                        }
+                                    }}>
+                                        {column.label}
+                                        {searchParams?.orderBy == column.value && (
+                                            <ArrowUpIcon />
+                                        )}
+                                    </NextLink>
+                                </Table.ColumnHeaderCell>
+                            )
+                        })}
                     </Table.Row>
                 </Table.Header>
 
