@@ -13,6 +13,7 @@ const Statuses: { label: string, value: Status | "ALL" }[] = [
 
 const IssueStatusFilter = () => {
 
+    // Get the current search query parameters
     const searchParams = useSearchParams();
 
     // Get current base url
@@ -34,7 +35,7 @@ const IssueStatusFilter = () => {
     }
 
     return (
-        <Select.Root defaultValue="ALL" onValueChange={(value) => handleStatusChange(value as Status)}>
+        <Select.Root defaultValue={searchParams.get('status') || 'ALL'} onValueChange={(value) => handleStatusChange(value as Status)}>
             <Select.Trigger placeholder='Filter status...' />
             <Select.Content>
                 <Select.Group>

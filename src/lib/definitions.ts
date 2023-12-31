@@ -1,4 +1,5 @@
 import { DefaultSession } from "next-auth";
+import { Issue } from "@prisma/client";
 
 // type for nav links
 export type NavLink = {
@@ -34,3 +35,7 @@ declare module 'next-auth' {
         user: User
     }
 }
+
+
+// Table column type
+export type TableColumn = { label: string, value: keyof Issue, className?: string }
