@@ -1,18 +1,12 @@
 import { IssueActions } from '@/components';
 import Pagination from '@/components/Pagination';
-import { TableColumn } from '@/lib/definitions';
 import { Issue, Status } from '@prisma/client';
 import prisma from '../../../../prisma/client';
-import IssueTable from './_components/IssueTable';
+import IssueTable, { IssueQuery, columnNames } from './_components/IssueTable';
 
 interface Prop {
-  searchParams?: {
-    status?: string;
-    orderBy?: string
-    page: string
-  };
+  searchParams: IssueQuery
 }
-
 
 const ITEMS_PER_PAGE = 6;
 
@@ -20,13 +14,6 @@ export default async function IssuesPage({ searchParams }: Prop) {
 
   // Get object values of status enum
   const statuses = Object.values(Status);
-
-  // Table column headers
-  const tableColumns: TableColumn[] = [
-    { label: "Issue", value: 'title' },
-    { label: "Status", value: 'status', className: 'hidden sm:table-cell' },
-    { label: "Created At", value: 'createdAt', className: 'hidden sm:table-cell' },
-  ]
 
   // Define the status
   let status = undefined;
@@ -36,11 +23,8 @@ export default async function IssuesPage({ searchParams }: Prop) {
     status = searchParams.status as Status;
   }
 
-  // Get columns values array
-  const columnValues = tableColumns.map(column => column.value);
-
   // Build order by query 
-  const orderBy = (searchParams?.orderBy && columnValues.includes(searchParams.orderBy as keyof Issue)) ? {
+  const orderBy = (searchParams?.orderBy && columnNames.includes(searchParams.orderBy as keyof Issue)) ? {
     [searchParams.orderBy]: 'asc'
   } : undefined
 
@@ -79,7 +63,7 @@ export default async function IssuesPage({ searchParams }: Prop) {
       </div>
 
       {/* Issue Table */}
-      <IssueTable issues={issues} searchParams={searchParams} tableColumns={tableColumns} />
+      <IssueTable issues={issues} searchParams={searchParams} />
 
       {/* Pagination */}
       <div className="mt-5 flex w-full justify-center">
