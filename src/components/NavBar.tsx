@@ -9,7 +9,7 @@ import { Avatar, Button, Container, DropdownMenu, Flex } from "@radix-ui/themes"
 import { Session } from "next-auth/types";
 
 const links: NavLink[] = [
-    { label: 'Dashboard', href: '/' },
+    { label: 'Dashboard', href: '/dashboard' },
     { label: 'Issues', href: '/dashboard/issues' },
 ]
 

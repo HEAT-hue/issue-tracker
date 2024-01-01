@@ -30,8 +30,8 @@ export default async function RootLayout({ children, }: {
   return (
     <html lang="en">
       <body className={inter.variable}>
+        {/* React Query Provider */}
         <QueryClientProvider>
-
           {/* Radix UI Theme */}
           <Theme>
             <NavBar session={session} />

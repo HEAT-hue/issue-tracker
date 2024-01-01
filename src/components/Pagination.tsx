@@ -22,8 +22,6 @@ const Pagination = ({ totalPages }: Prop) => {
     // Get the paginations
     const allPaginatedPages = generatePagination(currentPage, totalPages);
 
-    console.log(allPaginatedPages)
-
     const createPageURL = (pageNumber: number | string) => {
         const params = new URLSearchParams(searchParams);
 

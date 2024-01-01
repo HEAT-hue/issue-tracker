@@ -1,8 +1,9 @@
 import React from 'react'
+import LatestIssue from './LatestIssue'
 
 const DashboardPage = () => {
     return (
-        <div>DashboardPage</div>
+        <LatestIssue />
     )
 }
 

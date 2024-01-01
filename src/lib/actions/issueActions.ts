@@ -70,7 +70,6 @@ export async function updateIssue(formData: PatchIssue, issueId: number) {
         }
     }
 
-
     // Update the issue in db
     try {
         // Update the issue in db

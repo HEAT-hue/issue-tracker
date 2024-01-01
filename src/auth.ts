@@ -8,7 +8,8 @@ import bcrypt from 'bcrypt';
 export const { auth, signIn, signOut } = NextAuth({
     ...authConfig,
     session: {
-        strategy: 'jwt'
+        strategy: 'jwt',
+        maxAge: 24 * 60 * 60
     },
     providers: [Credentials({
         async authorize(credentials) {
