@@ -7,16 +7,18 @@ import { ArrowUpIcon } from '@radix-ui/react-icons'
 import NextLink from 'next/link'
 import { TableColumn } from '@/lib/definitions'
 
-interface Prop {
-    issues: Issue[],
-    searchParams: {
-        status?: string | undefined;
-        orderBy?: string | undefined;
-    } | undefined
-    tableColumns: TableColumn[]
+export interface IssueQuery {
+    status?: string | undefined;
+    orderBy?: string | undefined;
+    page: string
 }
 
-const IssueTable = ({ issues, searchParams, tableColumns }: Prop) => {
+interface Prop {
+    issues: Issue[],
+    searchParams: IssueQuery
+}
+
+const IssueTable = ({ issues, searchParams }: Prop) => {
 
     return (
         <>
@@ -80,5 +82,14 @@ const IssueTable = ({ issues, searchParams, tableColumns }: Prop) => {
         </>
     )
 }
+
+// Table column headers
+const tableColumns: TableColumn[] = [
+    { label: "Issue", value: 'title' },
+    { label: "Status", value: 'status', className: 'hidden sm:table-cell' },
+    { label: "Created At", value: 'createdAt', className: 'hidden sm:table-cell' },
+]
+
+export const columnNames = tableColumns.map(column => column.value)
 
 export default IssueTable
