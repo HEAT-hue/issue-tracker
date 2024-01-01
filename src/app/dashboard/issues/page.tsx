@@ -1,4 +1,5 @@
 import { IssueActions } from '@/components';
+import Pagination from '@/components/Pagination';
 import { TableColumn } from '@/lib/definitions';
 import { Issue, Status } from '@prisma/client';
 import prisma from '../../../../prisma/client';
@@ -8,8 +9,12 @@ interface Prop {
   searchParams?: {
     status?: string;
     orderBy?: string
+    page: string
   };
 }
+
+
+const ITEMS_PER_PAGE = 6;
 
 export default async function IssuesPage({ searchParams }: Prop) {
 
@@ -39,10 +44,31 @@ export default async function IssuesPage({ searchParams }: Prop) {
     [searchParams.orderBy]: 'asc'
   } : undefined
 
+  const page = parseInt(searchParams?.page || '1') || 1;
+
+  // query filter
+  const where = { status }
+
   // Fetch issues
   const issues = await prisma.issue.findMany({
-    where: { status }, orderBy
+    // Query filter
+    where,
+
+    // order rows
+    orderBy,
+
+    // Skip rows as the cursor changes
+    skip: (page - 1) * ITEMS_PER_PAGE,
+
+    // Select the rows you need
+    take: ITEMS_PER_PAGE,
   })
+
+  // Total number of issues
+  const totalIssues = await prisma.issue.count({ where });
+
+  // Get total number of pages
+  const totalPages = Math.ceil(totalIssues / ITEMS_PER_PAGE);
 
   return (
     <div className='flex flex-col gap-y-4'>
@@ -54,6 +80,11 @@ export default async function IssuesPage({ searchParams }: Prop) {
 
       {/* Issue Table */}
       <IssueTable issues={issues} searchParams={searchParams} tableColumns={tableColumns} />
+
+      {/* Pagination */}
+      <div className="mt-5 flex w-full justify-center">
+        <Pagination totalPages={totalPages} />
+      </div>
     </div>
   )
 }
