@@ -36,6 +36,5 @@ declare module 'next-auth' {
     }
 }
 
-
 // Table column type
 export type TableColumn = { label: string, value: keyof Issue, className?: string }

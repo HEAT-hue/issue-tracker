@@ -11,7 +11,7 @@ const IssueActions = () => {
 
       <Link
         className="w-max flex items-center justify-center"
-        href={"/issues/new"}
+        href={"/dashboard/issues/new"}
       >
         <Button className="cursor-pointer"> Create Issue</Button>
       </Link>
