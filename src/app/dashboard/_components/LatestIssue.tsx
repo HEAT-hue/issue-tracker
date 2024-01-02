@@ -1,7 +1,7 @@
 import { IssueStatusBadge } from "@/components"
 import { Flex, Table } from "@radix-ui/themes"
 import Link from "next/link"
-import prisma from "../../../prisma/client"
+import prisma from "../../../../prisma/client"
 import { Avatar } from "@radix-ui/themes"
 import { Card, Heading } from "@radix-ui/themes"
 
