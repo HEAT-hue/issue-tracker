@@ -1,4 +1,4 @@
-import { LatestIssue, IssueSummary } from "./_components"
+import { LatestIssue, IssueSummary, IssueChart } from "./_components"
 import prisma from "../../../prisma/client"
 
 const DashboardPage = async () => {
@@ -8,8 +8,11 @@ const DashboardPage = async () => {
     const inProgressIssues = await prisma.issue.count({ where: { status: 'IN_PROGRESS' } });
 
     return (
-        // <LatestIssue />
-        <IssueSummary openIssues={openIssues} closedIssues={closedIssues} inProgressIssues={inProgressIssues} />
+        <>
+            {/* <LatestIssue />
+            <IssueSummary openIssues={openIssues} closedIssues={closedIssues} inProgressIssues={inProgressIssues} /> */}
+            <IssueChart openIssues={openIssues} closedIssues={closedIssues} inProgressIssues={inProgressIssues} />
+        </>
     )
 }
 
