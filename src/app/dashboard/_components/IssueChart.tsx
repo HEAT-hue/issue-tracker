@@ -13,17 +13,17 @@ const IssueChart = ({ openIssues, inProgressIssues, closedIssues }: Props) => {
 
     const data = [
         {
-            label: 'Open Issues',
+            label: 'Open',
             value: openIssues,
             fill: 'var(--red-9)',
         },
         {
-            label: 'In-progress Issues',
+            label: 'In-progress',
             value: inProgressIssues,
             fill: 'var(--accent-9)',
         },
         {
-            label: 'Closed Issues',
+            label: 'Closed',
             value: closedIssues,
             fill: 'var(--green-9)',
         },
