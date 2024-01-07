@@ -10,12 +10,14 @@ import { useState } from "react"
 import { Controller, useForm } from "react-hook-form"
 import SimpleMDE from "react-simplemde-editor"
 import { DEFAULT_ERR_MSG } from "@/lib/definitions"
+import { useRouter } from 'next/navigation'
 
 interface Prop {
     issue?: Issue
 }
 
 const IssueForm = ({ issue }: Prop) => {
+    const router = useRouter()
 
     const { register, control, handleSubmit, formState: { errors } } = useForm<IssueFormType>({ resolver: zodResolver(IssueSchema) });
 
@@ -37,6 +39,9 @@ const IssueForm = ({ issue }: Prop) => {
                 // Create issue in the  server and redirect to issues page
                 await createIssue(data);
             }
+
+            // Redirect back to issues page
+            router.push('/dashboard/issues')
 
         } catch (error) {
             if (error instanceof Error) {

@@ -1,13 +1,13 @@
+import QueryClientProvider from '@/QueryClientProvider';
+import { auth } from '@/auth';
+import { NavBar } from '@/components';
 import { Container, Theme } from '@radix-ui/themes';
 import '@radix-ui/themes/styles.css';
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
+import NextTopLoader from 'nextjs-toploader';
 import './globals.css';
 import './theme.config.css';
-import { NavBar } from '@/components';
-import { auth } from '@/auth';
-import QueryClientProvider from '@/QueryClientProvider';
-
 // Font
 const inter = Inter({
   subsets: ['latin'],
@@ -30,6 +30,8 @@ export default async function RootLayout({ children, }: {
   return (
     <html lang="en">
       <body className={inter.variable}>
+        {/* Top Loader */}
+        <NextTopLoader />
         {/* React Query Provider */}
         <QueryClientProvider>
           {/* Radix UI Theme */}

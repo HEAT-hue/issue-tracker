@@ -56,7 +56,7 @@ export async function updateIssue(formData: PatchIssue, issueId: number) {
     if (assignedToUserId) {
         // Check if user exists in the db
         try {
-            await prisma.user.findUnique({
+            const response = await prisma.user.findUnique({
                 where: { id: assignedToUserId }
             })
 
@@ -94,8 +94,8 @@ export async function updateIssue(formData: PatchIssue, issueId: number) {
     // Revalidate "/issues" path  
     revalidatePath('/dashboard/issues');
 
-    // Redirect back to issues page
-    redirect('/dashboard/issues')
+    // // Redirect back to issues page
+    // redirect('/dashboard/issues')
 }
 
 export async function deleteIssue(issueId: number) {

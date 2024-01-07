@@ -24,12 +24,16 @@ const AsigneeSelect = ({ issue }: { issue: Issue }) => {
         return <Skeleton />
     }
 
+
     async function handleUpdateIssue(value: string) {
-        const userId = value == "undefined" ? null : value;
+        const userId = (value == "undefined" ? null : value);
 
         // Assign issue to user
         try {
             await updateIssue({ assignedToUserId: userId }, issue.id);
+
+            toast.success("Issue has been assigned successfully!");
+            
         } catch (error) {
             if (error instanceof Error) {
                 toast.error(error.message)
@@ -48,10 +52,10 @@ const AsigneeSelect = ({ issue }: { issue: Issue }) => {
                 <Select.Content>
                     <Select.Group>
                         <Select.Label>Suggestions</Select.Label>
-                        <Select.Item value={"undefined"}>Unassigned</Select.Item>
+                        <Select.Item value={"undefined"} disabled>Unassigned</Select.Item>
                         {users?.map((user) => {
                             return (
-                                <Select.Item key={user.id} value={user.id + "s"}>{user.name}</Select.Item>
+                                <Select.Item key={user.id} value={user.id}>{user.name}</Select.Item>
                             )
                         })}
                     </Select.Group>
