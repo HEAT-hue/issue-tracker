@@ -1,5 +1,5 @@
 import type { NextAuthConfig } from 'next-auth';
-import prisma from '../prisma/client';
+import GoogleProvider from "next-auth/providers/google";
 
 export const authConfig = {
     // Direct users to our sign in page
@@ -27,5 +27,12 @@ export const authConfig = {
             return false;
         },
     },
-    providers: [], // Add providers with an empty array for now
+
+    // Add providers
+    providers: [
+        GoogleProvider({
+            clientId: process.env.GOOGLE_CLIENT_ID,
+            clientSecret: process.env.GOOGLE_CLIENT_SECRET
+        })
+    ],
 } satisfies NextAuthConfig;

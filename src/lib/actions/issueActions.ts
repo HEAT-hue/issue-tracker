@@ -72,8 +72,9 @@ export async function updateIssue(formData: PatchIssue, issueId: number) {
 
     // Update the issue in db
     try {
+
         // Update the issue in db
-        const response = await prisma.issue.update({
+        await prisma.issue.update({
             where: { id: issueId },
             data: {
                 title,
@@ -81,8 +82,6 @@ export async function updateIssue(formData: PatchIssue, issueId: number) {
                 assignedToUserId
             }
         })
-
-        console.log(response);
 
     } catch (error) {
         if (error instanceof PrismaClientKnownRequestError) {
