@@ -2,6 +2,8 @@
 import { Button } from '@radix-ui/themes';
 import { useFormState, useFormStatus } from 'react-dom';
 import { createUser } from '@/lib/actions';
+import { Text } from 'recharts';
+import Link from 'next/link';
 
 const SignUpForm = () => {
     const [errorMessage, dispatch] = useFormState(createUser, undefined);
@@ -100,7 +102,13 @@ const SignUpForm = () => {
                         </>
                     )}
                 </div>
+                <div className='flex justify-end'>
+                    <Link className='' href={"/login"}>
+                        <Text>Login here</Text>
+                    </Link>
+                </div>
             </div>
+
         </form>
     )
 }

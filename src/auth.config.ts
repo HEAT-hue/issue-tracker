@@ -1,11 +1,11 @@
 import type { NextAuthConfig } from 'next-auth';
-import GoogleProvider from "next-auth/providers/google";
 
 export const authConfig = {
     // Direct users to our sign in page
     pages: {
         signIn: '/login',
     },
+
     callbacks: {
 
         // Called before a request is completed
@@ -16,23 +16,27 @@ export const authConfig = {
          * @returns 
          */
         authorized({ auth, request: { nextUrl } }) {
+            // Checks if current user is logged in
             const isLoggedIn = !!auth?.user;
+            
+            // check if user is trying to access a protected route
             const isOnDashboard = nextUrl.pathname.startsWith('/dashboard');
             if (isOnDashboard) {
+
+                // if true, grant access if user is logged in.
                 if (isLoggedIn) return true;
                 return false; // Redirect unauthenticated users to login page
             } else if (isLoggedIn) {
+
+                // If logged in however, return user to dashboard
                 return Response.redirect(new URL('/dashboard', nextUrl));
             }
-            return false;
+
+            // Allow access to other non protected routes
+            return true;
         },
     },
 
     // Add providers
-    providers: [
-        GoogleProvider({
-            clientId: process.env.GOOGLE_CLIENT_ID,
-            clientSecret: process.env.GOOGLE_CLIENT_SECRET
-        })
-    ],
+    providers: [],
 } satisfies NextAuthConfig;

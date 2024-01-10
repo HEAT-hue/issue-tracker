@@ -5,7 +5,7 @@ import { FaBug } from "react-icons/fa";
 import { usePathname } from "next/navigation";
 import classNames from "classnames";
 import { signOutUser } from "@/lib/actions";
-import { Avatar, Button, Container, DropdownMenu, Flex } from "@radix-ui/themes";
+import { Avatar, Container, DropdownMenu, Flex } from "@radix-ui/themes";
 import { Session } from "next-auth/types";
 
 const links: NavLink[] = [

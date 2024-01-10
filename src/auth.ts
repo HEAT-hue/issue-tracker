@@ -11,6 +11,7 @@ export const { auth, signIn, signOut } = NextAuth({
         strategy: 'jwt',
         maxAge: 24 * 60 * 60
     },
+
     providers: [Credentials({
         async authorize(credentials) {
             const parsedCredentials = z
