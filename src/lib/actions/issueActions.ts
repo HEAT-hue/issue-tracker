@@ -8,7 +8,6 @@ import { redirect } from 'next/navigation';
 import prisma from '../../../prisma/client';
 import { DEFAULT_ERR_MSG } from '../definitions';
 import { CreateIssue, IssueSchema, PatchIssue, patchIssueSchema } from '../validationSchemas';
-import { Status } from '@prisma/client';
 
 
 export async function createIssue(formData: CreateIssue) {
@@ -94,8 +93,8 @@ export async function updateIssue(formData: PatchIssue, issueId: number) {
     // Revalidate "/issues" path  
     revalidatePath('/dashboard/issues');
 
-    // // Redirect back to issues page
-    // redirect('/dashboard/issues')
+    // Redirect back to issues page
+    redirect('/dashboard/issues')
 }
 
 export async function deleteIssue(issueId: number) {
