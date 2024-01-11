@@ -41,7 +41,7 @@ const IssueForm = ({ issue }: Prop) => {
             }
 
             // Redirect back to issues page
-            router.push('/dashboard/issues')
+            // router.push('/dashboard/issues')
 
         } catch (error) {
             if (error instanceof Error) {
