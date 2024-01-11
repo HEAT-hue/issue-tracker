@@ -1,5 +1,5 @@
 import { DefaultSession } from "next-auth";
-import { Issue } from "@prisma/client";
+import { Issue, Status } from "@prisma/client";
 
 // type for nav links
 export type NavLink = {
@@ -38,3 +38,10 @@ declare module 'next-auth' {
 
 // Table column type
 export type TableColumn = { label: string, value: keyof Issue, className?: string }
+
+// Issue status Map
+export const statusMap: Record<Status, { label: string, color: 'red' | 'violet' | 'green' }> = {
+    OPEN: { label: 'open', color: 'red' },
+    IN_PROGRESS: { label: 'in progress', color: 'violet' },
+    CLOSED: { label: 'closed', color: 'green' },
+}

@@ -8,6 +8,7 @@ import { redirect } from 'next/navigation';
 import prisma from '../../../prisma/client';
 import { DEFAULT_ERR_MSG } from '../definitions';
 import { CreateIssue, IssueSchema, PatchIssue, patchIssueSchema } from '../validationSchemas';
+import { Status } from '@prisma/client';
 
 
 export async function createIssue(formData: CreateIssue) {
@@ -51,7 +52,7 @@ export async function updateIssue(formData: PatchIssue, issueId: number) {
         throw new Error(errorMessage);
     }
 
-    const { title, description, assignedToUserId } = formData
+    const { title, description, assignedToUserId, status } = formData
 
     if (assignedToUserId) {
         // Check if user exists in the db
@@ -61,7 +62,6 @@ export async function updateIssue(formData: PatchIssue, issueId: number) {
             })
 
         } catch (error) {
-            console.log(error);
             if (error instanceof PrismaClientKnownRequestError) {
                 const errorMessage = error.meta?.cause as string;
                 throw new Error(errorMessage);
@@ -79,7 +79,8 @@ export async function updateIssue(formData: PatchIssue, issueId: number) {
             data: {
                 title,
                 description,
-                assignedToUserId
+                assignedToUserId,
+                status
             }
         })
 

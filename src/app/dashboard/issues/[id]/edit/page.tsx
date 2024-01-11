@@ -1,8 +1,10 @@
 import prisma from '../../../../../../prisma/client';
 import { notFound } from 'next/navigation';
 import IssueFormSkeleton from './loading';
+import IssueStatusSelect from './IssueStatusSelect';
 
 import dynamic from 'next/dynamic';
+import { Grid } from '@radix-ui/themes';
 
 const IssueForm = dynamic(() => import('../../_components/IssueForm'), {
     ssr: false,
@@ -30,10 +32,18 @@ const EditIssuePage = async ({ params }: Prop) => {
     }
 
     return (
-        <div className='max-w-xl space-y-3'>
+        <div className=''>
+            <Grid columns={{ initial: '1', sm: '2' }} gap="3">
+                {/* Issue Form */}
+                <IssueForm issue={issue} />
 
-            {/* Issue Form */}
-            <IssueForm issue={issue} />
+                {/* Issue status update */}
+                <div className='w-max'>
+                    <IssueStatusSelect issue={issue} />
+                </div>
+
+            </Grid>
+
         </div>
     )
 }

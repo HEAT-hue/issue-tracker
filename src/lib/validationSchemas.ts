@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { Status } from '@prisma/client';
 
 // Create object zchema
 export const IssueSchema = z.object({
@@ -9,7 +10,8 @@ export const IssueSchema = z.object({
 export const patchIssueSchema = z.object({
     title: z.string().min(1, { message: 'Title is required' }).max(255).optional(),
     description: z.string().min(1, { message: 'Description is required' }).max(65555).optional(),
-    assignedToUserId: z.string().max(255).optional().nullable()
+    assignedToUserId: z.string().max(255).optional().nullable(),
+    status: z.nativeEnum(Status).optional()
 });
 
 export const CreateUserSchema = z.object({
