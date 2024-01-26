@@ -11,6 +11,8 @@ import { Controller, useForm } from "react-hook-form"
 import SimpleMDE from "react-simplemde-editor"
 import { DEFAULT_ERR_MSG } from "@/lib/definitions"
 import { useRouter } from 'next/navigation'
+import toast, { Toaster } from 'react-hot-toast';
+import delay from "delay"
 
 interface Prop {
     issue?: Issue
@@ -34,6 +36,12 @@ const IssueForm = ({ issue }: Prop) => {
             // If any issue is present, update it
             if (issue) {
                 await updateIssue(data, issue.id);
+
+                // Update issue toast message
+                toast.success("Issue has been updated successfully!");
+
+                // Delay before redirecting back to issues page
+                await delay(2000);
             }
             else {
                 // Create issue in the  server and redirect to issues page
@@ -41,7 +49,7 @@ const IssueForm = ({ issue }: Prop) => {
             }
 
             // Redirect back to issues page
-            // router.push('/dashboard/issues')
+            router.push('/dashboard/issues')
 
         } catch (error) {
             if (error instanceof Error) {
@@ -91,6 +99,9 @@ const IssueForm = ({ issue }: Prop) => {
                 {/* Edit or Submit Issue */}
                 <Button disabled={isSubmitting} className={`cursor-pointer ${isSubmitting && 'bg-gray-400'}`}>{issue ? 'Edit Issue' : 'Submit New Issue'} {isSubmitting && <Spinner />}</Button>
             </form>
+
+            {/* Toast messages */}
+            <Toaster />
         </>
     )
 }

@@ -61,6 +61,8 @@ const AsigneeSelect = ({ issue }: { issue: Issue }) => {
                     </Select.Group>
                 </Select.Content>
             </Select.Root>
+
+            {/* Toast messages */}
             <Toaster />
         </>
     )

@@ -94,7 +94,7 @@ export async function updateIssue(formData: PatchIssue, issueId: number) {
     revalidatePath('/dashboard/issues');
 
     // Redirect back to issues page
-    redirect('/dashboard/issues')
+    // redirect('/dashboard/issues')
 }
 
 export async function deleteIssue(issueId: number) {
