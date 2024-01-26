@@ -38,7 +38,7 @@ export async function createIssue(formData: CreateIssue) {
     revalidatePath('/dashboard/issues');
 
     // Redirect back to issues page
-    redirect('/dashboard/issues')
+    redirect('/dashboard/issues?orderBy=createdAt')
 }
 
 export async function updateIssue(formData: PatchIssue, issueId: number) {

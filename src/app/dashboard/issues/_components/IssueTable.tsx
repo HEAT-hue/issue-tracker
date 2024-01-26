@@ -54,6 +54,11 @@ const IssueTable = ({ issues, searchParams }: Prop) => {
                 {/* Table Body */}
                 <Table.Body>
                     {issues.map((issue) => {
+
+                        // Get time issue was created
+                        const date = new Date(issue.createdAt);
+                        const time = date.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true })
+
                         return (
                             <Table.Row key={issue.id}>
                                 <Table.RowHeaderCell>
@@ -73,7 +78,7 @@ const IssueTable = ({ issues, searchParams }: Prop) => {
                                 </Table.Cell>
 
                                 {/* Date issue created */}
-                                <Table.Cell className='hidden sm:table-cell'>{issue.createdAt.toDateString()}</Table.Cell>
+                                <Table.Cell className='hidden sm:table-cell'>{`${issue.createdAt.toDateString()} - ${time}`}</Table.Cell>
                             </Table.Row>
                         )
                     })}

@@ -25,9 +25,9 @@ export default async function IssuesPage({ searchParams }: Prop) {
   }
 
   // Build order by query 
-  const orderBy = (searchParams?.orderBy && columnNames.includes(searchParams.orderBy as keyof Issue)) ? {
-    [searchParams.orderBy]: 'asc'
-  } : undefined
+  let orderBy = (searchParams?.orderBy && columnNames.includes(searchParams.orderBy as keyof Issue)) ? {
+    [searchParams.orderBy]: 'desc'
+  } : undefined;
 
   const page = parseInt(searchParams?.page || '1') || 1;
 

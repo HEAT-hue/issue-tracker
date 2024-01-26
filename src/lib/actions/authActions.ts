@@ -66,10 +66,8 @@ export async function getAuthUser({ email }: { email: string; }): Promise<User |
         }
 
     } catch (error) {
-        console.log(error);
         if (error instanceof PrismaClientKnownRequestError) {
             const errorMessage = error.meta?.cause as string;
-            console.log(errorMessage);
             throw new Error(errorMessage);
         }
         throw new Error("Oops! An error occured");
